@@ -17,6 +17,8 @@ bootstrap();
          yarn add @nestjs/typeorm
          yarn add mysql2
          yarn add @nestjs/ormconfig
+         yarn add class-transformer
+         yarn add class-validator
 
          .env
          .env.example
