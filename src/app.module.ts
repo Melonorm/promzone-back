@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
+import { SubstationModule } from './api/substation/substation.module';
 import config from "./configs/ormconfig";
 
 @Module({
@@ -11,6 +12,7 @@ import config from "./configs/ormconfig";
     ConfigModule.forRoot({
       isGlobal: true
     }),
+    SubstationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

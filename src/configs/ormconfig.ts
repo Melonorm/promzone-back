@@ -6,7 +6,7 @@ const config: ConnectionOptions = {
   port: parseInt(process.env.TYPEORM_PORT),
   username: 'root',      // TODO: Разобраться, почему не работает через .env и username принимает только 'root'
 //  password: process.env.TYPEORM_PASSWORD,   // TODO: Разобраться, почему коннект только без пароля
-  database: process.env.TYPEORM_DATABASE,
+  database: 'promzone_db',  // TODO: Разобраться, почему не работает через .env
   entities: ['dist/common/entities/*.entity{.ts,.js}'],
   subscribers: ['dist/common/subscribers/*.subscriber{.ts,.js}'],
   migrations: ['dist/common/migrations/**/*{.ts,.js}'],

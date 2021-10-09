@@ -1,0 +1,1 @@
+export const SUBSTATION_ALREADY_EXIST_MESSAGE: string = 'Substation with this name already exist.';
