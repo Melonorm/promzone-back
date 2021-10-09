@@ -5,6 +5,6 @@ export class SubstationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({name: 'name', type: 'varchar', unique: true})
+  @Column({name: 'name', type: 'varchar', length: 50, unique: true})
   name: string;
 }

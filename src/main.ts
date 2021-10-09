@@ -17,8 +17,6 @@ bootstrap();
          yarn add @nestjs/typeorm
          yarn add mysql2
          yarn add @nestjs/ormconfig
-         yarn add class-transformer
-         yarn add class-validator
 
          .env
          .env.example
@@ -27,5 +25,10 @@ bootstrap();
          import typeorm, ormconfig in app.module
          added orm scripts in package.json
 
-      2. Substation: module, entity, repository
+      2. Substation: module, entity, repository etc,
+         yarn add class-transformer
+         yarn add class-validator
+
+      3. yarn add date-fns
+         Equipment: module, entity, repository etc.
  */

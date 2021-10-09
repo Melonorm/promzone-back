@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 import { SubstationModule } from './api/substation/substation.module';
+import { EquipmentModule } from './api/equipment/equipment.module';
 import config from "./configs/ormconfig";
 
 @Module({
@@ -13,6 +14,7 @@ import config from "./configs/ormconfig";
       isGlobal: true
     }),
     SubstationModule,
+    EquipmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
