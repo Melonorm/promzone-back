@@ -1,10 +1,6 @@
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from "class-validator";
+import { IsDateString, IsNotEmpty, IsNumber, IsPositive, IsString } from "class-validator";
 
 export class EquipmentCreateDto {
-  @IsNotEmpty()
-  @IsString()
-  readonly name: string;
-
   @IsNotEmpty()
   @IsString()
   readonly invNum: string;
@@ -12,8 +8,9 @@ export class EquipmentCreateDto {
   @IsNotEmpty()
   @IsNumber()
   @IsPositive()
-  readonly substationId: number;
+  readonly equipmentTypeId: number;
 
-  @IsString()
   readonly notation?: string;
+
+  readonly inspectDateString: string;
 }

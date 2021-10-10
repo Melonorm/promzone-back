@@ -5,11 +5,11 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 import { SubstationModule } from './api/substation/substation.module';
 import { EquipmentModule } from './api/equipment/equipment.module';
-import config from "./configs/ormconfig";
+import ormconfig from "./configs/ormconfig";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(config),
+    TypeOrmModule.forRoot(ormconfig),
     ConfigModule.forRoot({
       isGlobal: true
     }),

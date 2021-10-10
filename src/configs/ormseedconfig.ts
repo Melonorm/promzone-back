@@ -1,8 +1,8 @@
-import config from "./ormconfig";
+import ormconfig from "./ormconfig";
 
 const ormseedconfig = {
-  ...config,
-  migrations: [__dirname + '/common/seeds/**/*{.ts,.js}'],
+  ...ormconfig,
+  migrations: ['dist/common/seeds/**/*{.ts,.js}'],
   cli: {
     migrationsDir: 'src/common/seeds'
   }
