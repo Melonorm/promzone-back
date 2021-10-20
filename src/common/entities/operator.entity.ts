@@ -34,4 +34,5 @@ export class OperatorEntity {
   async hashingPassword() {
     this.passwordHash = await hash(this.passwordHash, 5);
   }
+
 }
