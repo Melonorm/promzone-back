@@ -17,7 +17,7 @@ export class EquipmentService {
     private readonly equipmentTypeRepository: EquipmentTypeRepository) {
   }
 
-  async create(dto: EquipmentCreateDto, userId: number): Promise<EquipmentEntity> {
+  async create(dto: EquipmentCreateDto, operatorId: number): Promise<EquipmentEntity> {
     const findByInvNum: EquipmentEntity = await this.equipmentRepository.findOne({invNum: dto.invNum});
     if (findByInvNum) {
       throw new HttpException(EQUIPMENT_ALREADY_EXIST_MESSAGE, HttpStatus.UNPROCESSABLE_ENTITY);
@@ -37,15 +37,28 @@ export class EquipmentService {
     equipment.inspectedBy = "Швагер В.В.";    // TODO: ХАРДКОД!!!!
     equipment.substationId = 1;              // TODO: ХАРДКОД!!!!
     equipment.inspectDate = new Date();
-    equipment.lastCheckoutDate = dto.inspectDateString? new Date(dto.inspectDateString) : null;
+    equipment.lastCheckoutDate = dto.inspectDateString? new Date(dto.inspectDateString) : null; // TODO: Внедрить match обработку date-string
     equipment.nextCheckoutDate = equipment.lastCheckoutDate !== null? addMonths(equipment.lastCheckoutDate, type.inspectionFrequency) : null;
     equipment.equipmentType = type;
     await this.equipmentRepository.save(equipment);
     return equipment;
   }
 
-  async findAllBySubstationId(substationId: number) {
-    const equipments: EquipmentEntity[] = await this.equipmentRepository.find({substationId});
+  async updateEquipmentById() {}
+
+  async findAllBySubstationId(substationId: number): Promise<EquipmentEntity[]> {
+    const equipments: EquipmentEntity[] = await this.equipmentRepository.find({
+      join: {
+        alias: 'equipment',
+        leftJoinAndSelect: {
+          equipmentType: 'equipment.equipmentType'
+        }
+      },
+      where: {
+        substationId
+      }
+    });
     return equipments;
   }
 }
+

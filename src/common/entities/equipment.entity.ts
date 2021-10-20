@@ -29,10 +29,11 @@ export class EquipmentEntity {
   inspectedBy: string;    // ФИО проверяющего
 
   @Column()
-  substationId: number;
+  substationId: number;  // ID подстанции
 
   @Column({type: 'text', default: ''})
   notation: string;      // заметки
+
 
   @ManyToOne(() => SubstationEntity)
   substation: SubstationEntity;
