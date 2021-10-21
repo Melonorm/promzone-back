@@ -10,7 +10,7 @@ export class OperatorEntity {
   @Column({type: 'varchar', length: 20, nullable: false, unique: true})
   login: string;
 
-  @Column({type: 'varchar', nullable: false})
+  @Column({type: 'varchar', nullable: false, select: false})
   passwordHash: string;
 
   @Column({type: 'varchar', length: 20, nullable: false})
@@ -31,7 +31,7 @@ export class OperatorEntity {
 
 
   @BeforeInsert()
-  async hashingPassword() {
+  async hashPassword() {
     this.passwordHash = await hash(this.passwordHash, 5);
   }
 

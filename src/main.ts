@@ -31,4 +31,12 @@ bootstrap();
 
       3. yarn add date-fns
          Equipment: module, entity, repository etc.
+
+     4. Operator: module, entity, repository etc.
+        yarn add bcrypt
+        yarn add -dev @types/bcrypt
+
+     5. yarn add jsonwebtoken
+        yarn add @types/jsonwebtoken
+
  */
