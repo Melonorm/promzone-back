@@ -7,6 +7,7 @@ import { OperatorRepository } from "../../common/repositories/operator.repositor
 @Module({
   imports: [TypeOrmModule.forFeature([OperatorRepository])],
   providers: [OperatorService],
-  controllers: [OperatorController]
+  controllers: [OperatorController],
+  exports: [OperatorService]
 })
 export class OperatorModule {}

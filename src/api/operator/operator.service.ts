@@ -53,6 +53,11 @@ export class OperatorService {
     return operator;
   }
 
+  async findById(id: number): Promise<OperatorEntity> {
+    const operator: OperatorEntity = await this.operatorRepository.findOne(id);
+    return operator;
+  }
+
   async getAllBySubstationId(substationId: number): Promise<OperatorEntity[]> {
     const operators: OperatorEntity[] = await this.operatorRepository.find({substationId});
     return operators;
