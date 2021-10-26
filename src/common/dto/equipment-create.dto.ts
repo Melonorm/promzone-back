@@ -12,5 +12,5 @@ export class EquipmentCreateDto {
 
   readonly notation?: string;
 
-  readonly inspectDateString: string;
+  readonly lastCheckoutDateString?: string;
 }

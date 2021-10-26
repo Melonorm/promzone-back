@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
 import { EquipmentService } from "./equipment.service";
 import { EquipmentCreateDto } from "../../common/dto/equipment-create.dto";
 import { EquipmentEntity } from "../../common/entities/equipment.entity";
 import { OperatorEntity } from "../../common/entities/operator.entity";
 import { OperatorAuthGuard } from "../../common/guards/operator-auth.guard";
 import { Operator } from "../../common/decorators/operator.decorator";
+import { EquipmentUpdateDto } from "../../common/dto/equipment-update.dto";
 
 @Controller('equipment')
 export class EquipmentController {
@@ -15,8 +16,29 @@ export class EquipmentController {
   @Post('create')
   async create(
     @Body('equipment') dto: EquipmentCreateDto,
-    @Operator() operator: OperatorEntity) {
+    @Operator() operator: OperatorEntity
+  ) {
     const equipment: EquipmentEntity = await this.equipmentService.create(dto, operator);
+    return equipment;
+  }
+
+  @Patch('update/:equipmentId')
+  async update(
+    @Body() dto: EquipmentUpdateDto,
+    @Param('equipmentId') equipmentId: number
+  ) {
+    const equipment: EquipmentEntity = await this.equipmentService.updateEquipmentById(dto, equipmentId);
+    return equipment;
+  }
+
+  @UseGuards(OperatorAuthGuard)
+  @Patch('inspect/:equipmentId')
+  async inspectEquipment(
+    @Body() dto: EquipmentUpdateDto,
+    @Param('equipmentId') equipmentId: number,
+    @Operator() operator: OperatorEntity
+  ) {
+    const equipment: EquipmentEntity = await this.equipmentService.inspectEquipment(dto, equipmentId, operator);
     return equipment;
   }
 

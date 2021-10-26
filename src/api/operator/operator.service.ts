@@ -70,6 +70,14 @@ export class OperatorService {
     return jwt;
   }
 
+  /**
+   * Генерация строки с инициалами дежурного (Например: Швагер В.В.)
+   * @param operator
+   */
+  makeOperatorsFullName(operator: OperatorEntity): string {
+    return `${operator.lastName} ${operator.firstName.substring(0, 1)}.${operator.fatherName.substring(0, 1)}.`;
+  }
+
   buildOperatorResponse(operator: OperatorEntity): OperatorResponseInterface {
     return {
       operator: {

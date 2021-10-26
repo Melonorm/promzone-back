@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { SubstationEntity } from "./substation.entity";
 import { EquipmentTypeEntity } from "./equipmentType.entity";
+import { addMonths, parseISO } from "date-fns";
 
 @Entity({name: 'equipment'})
 export class EquipmentEntity {
@@ -38,6 +39,7 @@ export class EquipmentEntity {
   @ManyToOne(() => SubstationEntity)
   substation: SubstationEntity;
 
-  @ManyToOne(() => EquipmentTypeEntity)
+  @ManyToOne(() => EquipmentTypeEntity, {eager: true})
   equipmentType: EquipmentTypeEntity;
+
 }
