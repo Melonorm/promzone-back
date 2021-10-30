@@ -6,6 +6,8 @@ import { OperatorEntity } from "../../common/entities/operator.entity";
 import { OperatorAuthGuard } from "../../common/guards/operator-auth.guard";
 import { Operator } from "../../common/decorators/operator.decorator";
 import { EquipmentUpdateDto } from "../../common/dto/equipment-update.dto";
+import { EquipmentSortedByConditionInterface } from "./types/equipmentSortedByCondition.interface";
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 
 @Controller('equipment')
 export class EquipmentController {
@@ -47,4 +49,22 @@ export class EquipmentController {
     const equipments: EquipmentEntity[] = await this.equipmentService.findAllBySubstationId(substationId);
     return equipments;
   }
+
+  @Get('getSortedByCondition/:substationId')
+  async getSortedByConditionEquipment(@Param('substationId') substationId: number) {
+    const equipments: EquipmentEntity[] = await this.equipmentService.findAllBySubstationId(substationId);
+    const sorted: EquipmentSortedByConditionInterface = this.equipmentService.sortEquipmentsByCondition(equipments);
+    return sorted;
+  }
+
+  @Get('test')
+  test() {
+    const date: Date = new Date()
+    console.log('current', date);
+    const tz: string = 'Russia/Moscow';
+    const zoned = zonedTimeToUtc(date, tz);
+    console.log('zoned', zoned);
+    return zoned;
+  }
+
 }

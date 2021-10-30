@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { EquipmentRepository } from "../../common/repositories/equipment.repository";
 import { EquipmentCreateDto } from "../../common/dto/equipment-create.dto";
 import { EquipmentEntity } from "../../common/entities/equipment.entity";
-import { addMonths, parseISO } from "date-fns";
+import { addDays, addMonths, isAfter, parseISO } from "date-fns";
 import { EquipmentTypeEntity } from "../../common/entities/equipmentType.entity";
 import { EquipmentTypeRepository } from "../../common/repositories/equipmentType.repository";
 import {
@@ -14,6 +14,8 @@ import {
 import { OperatorEntity } from "../../common/entities/operator.entity";
 import { EquipmentUpdateDto } from "../../common/dto/equipment-update.dto";
 import { OperatorService } from "../operator/operator.service";
+import { EquipmentSortedByConditionInterface } from "./types/equipmentSortedByCondition.interface";
+import { EquipmentResponseInterface } from "./types/equipmentResponse.interface";
 
 @Injectable()
 export class EquipmentService {
@@ -111,6 +113,35 @@ export class EquipmentService {
       }
     });
     return equipments;
+  }
+
+  sortEquipmentsByCondition(equipments: EquipmentEntity[]): EquipmentSortedByConditionInterface {
+    const valid: EquipmentResponseInterface[] = [];
+    const almostExpired: EquipmentResponseInterface[] = [];
+    const expired: EquipmentResponseInterface[] = [];
+    const badCondition: EquipmentResponseInterface[] = [];
+    for (const equipment of equipments) {
+      const equipmentResponse: EquipmentResponseInterface = {
+        invNum: equipment.invNum,
+        typeName: equipment.equipmentType.name,
+        nextCheckoutDate: equipment.nextCheckoutDate,
+        notation: equipment.notation
+      };
+      if (equipment.isGoodCondition == false) {
+        badCondition.push(equipmentResponse);
+      }
+      else if (equipment.nextCheckoutDate && isAfter(new Date(), parseISO(equipment.nextCheckoutDate.toString()))) {
+        expired.push(equipmentResponse);
+      }
+      else if (equipment.nextCheckoutDate && isAfter(new Date(), addDays(parseISO(equipment.nextCheckoutDate.toString()), -14))) {
+        almostExpired.push(equipmentResponse);
+      }
+      else {
+        valid.push(equipmentResponse);
+      }
+    }
+    const sortedEquipments: EquipmentSortedByConditionInterface = { equipments: { valid, almostExpired, expired, badCondition } };
+    return sortedEquipments;
   }
 }
 
